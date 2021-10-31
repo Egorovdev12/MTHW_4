@@ -5,6 +5,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Main {
 
+    private static final int MAX_QUEUE_SIZE = 100;
+
     public static void main(String[] args) {
         Queue<Call> incomingCalls = new ConcurrentLinkedQueue<>();
         ATS ats = new ATS(incomingCalls);
@@ -18,7 +20,7 @@ public class Main {
         Thread atsThread = new Thread(null, ats, "Stream 1"); atsThread.start();
 
         while (true) {
-            if (incomingCalls.size() > 100) {
+            if (incomingCalls.size() > MAX_QUEUE_SIZE) {
                 workingOperators.interrupt();
                 atsThread.interrupt();
                 break;
