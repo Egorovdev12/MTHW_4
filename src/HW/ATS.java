@@ -1,8 +1,6 @@
 package HW;
 
 import java.util.Queue;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class ATS implements Runnable{
 
@@ -16,9 +14,8 @@ public class ATS implements Runnable{
 
     @Override
     public void run() {
-        Lock atsLocker = new ReentrantLock();
+
         while (!Thread.currentThread().isInterrupted()) {
-            atsLocker.lock();
             try {
                 Thread.sleep(LOAD_TIME);
                 for (int i = 0; i < CALLS_PER_TIME; i++){
@@ -28,9 +25,6 @@ public class ATS implements Runnable{
             } catch (InterruptedException e) {
                 System.out.println(Thread.currentThread().getName() + ": прерывает своё выполнение");
                 Thread.currentThread().interrupt();
-            }
-            finally {
-                atsLocker.unlock();
             }
         }
     }

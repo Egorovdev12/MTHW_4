@@ -1,8 +1,6 @@
 package HW;
 
 import java.util.Queue;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class Operator implements Runnable {
 
@@ -15,10 +13,8 @@ public class Operator implements Runnable {
 
     @Override
     public void run() {
-        Lock operatorLocker = new ReentrantLock();
 
         while (!Thread.currentThread().isInterrupted()) {
-            operatorLocker.lock();
             try {
                 if (callQueue.peek() == null) {
                     // делать что-то если звонков в очереди нет
@@ -32,8 +28,6 @@ public class Operator implements Runnable {
             } catch (InterruptedException e) {
                 System.out.println(Thread.currentThread().getName() + ": прерывает своё выполнение");
                 Thread.currentThread().interrupt();
-            } finally {
-                operatorLocker.unlock();
             }
         }
     }
